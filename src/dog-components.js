@@ -10,8 +10,9 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import IconButton from "@material-ui/core/IconButton";
 
 const DogContainer = (props) => {
+  const { isFav, onChangeFav } = props; //Destructring
   const dog = props.dog;
-  const isFav = props.isFav;
+
   return (
     <Card
       style={{
@@ -33,9 +34,7 @@ const DogContainer = (props) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <IconButton aria-label="fav">
-          {isFav && <div>true</div>}
-          {!isFav && <div>False</div>}
+        <IconButton aria-label="fav" onClick={onChangeFav}>
           {isFav && <FavoriteIcon style={{ color: "red" }} />}
           {!isFav && <FavoriteBorderIcon />}
         </IconButton>

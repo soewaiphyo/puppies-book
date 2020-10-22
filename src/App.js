@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import DogContainer from "./dog-components";
@@ -49,14 +49,29 @@ const dogFive = new Dog(
   "Love Steak and bacon. love to play with buddies"
 );
 const dogs = [dogOne, dogTwo, dogThree, dogFour, dogFive];
+const FAVOURITE_DOGS = "favourite-dogs";
 
 function App() {
+  const [favItems, setFavItems] = useState([]);
+
   return (
     <div className="App">
       <div className="container-center">
         <h1>Cute Dogs are here!</h1>
         {dogs.map((dog, i) => (
-          <DogContainer dog={dog} key={i} isFav={false} />
+          <DogContainer
+            dog={dog}
+            key={i}
+            isFav={favItems.findIndex((item) => item == dog.name) >= 0} //default false
+            onChangeFav={() => {
+              const newFavItems =
+                favItems.findIndex((item) => item == dog.name) >= 0
+                  ? favItems.filter((item) => item !== dog.name)
+                  : [...favItems, dog.name];
+              localStorage.setItem(FAVOURITE_DOGS, JSON.stringify(newFavItems));
+              setFavItems(newFavItems);
+            }}
+          />
         ))}
       </div>
     </div>
